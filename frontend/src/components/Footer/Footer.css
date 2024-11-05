@@ -38,7 +38,13 @@
     width: 40px;
     margin-right: 15px;
 }
-
+.logo2{
+    height: 110px;
+    width: 110px;
+    border-radius: 50%;
+    background-size: contain;
+    background-color: transparent;
+}
 .footer hr{
     width: 100%;
     height: 2px;

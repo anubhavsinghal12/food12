@@ -32,7 +32,13 @@ hr{
   flex-direction: column;
   gap: 10px;
 }
-
+.logo{
+  height: 80px;
+  width: 80px;
+  border-radius: 50%;
+  background-size: contain;
+  background-color: transparent;
+}
 .cursor{
   cursor: pointer;
 }
