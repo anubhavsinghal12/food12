@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import  { useContext, useEffect, useState } from 'react'
 import './MyOrders.css'
 import { StoreContext } from './../../components/context/StoreContext';
 import axios from 'axios';
@@ -35,7 +35,7 @@ useEffect(()=>{
                                     return item.name+" x "+item.quantity + ","
                                 }
                             })}</p>
-                            <p>${order.amount}.00</p>
+                            <p>RS{order.amount}.00</p>
                             <p>Items: {order.items.length}</p>
                             <p><span>&#x25cf;</span><b>{order.status}</b></p>
                             <button onClick={fetchOrders}>Track Order</button>
