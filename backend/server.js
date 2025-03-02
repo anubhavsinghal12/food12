@@ -1,11 +1,12 @@
 import express from 'express'
 import cors from 'cors'
-import { connectDB } from './config/db.js'
+
 import foodRouter from './routes/foodRoute.js'
 import userRouter from './routes/userRoute.js';
 import 'dotenv/config';
 import cartRouter from './routes/cartRoute.js';
 import orderRouter from './routes/orderRoute.js';
+import mongoose from "mongoose";
 
 //app config
 const app = express()
@@ -15,8 +16,10 @@ const port =process.env.PORT || 4000
 app.use(express.json())
 app.use(cors())
 
-//db connection
-connectDB();
+mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => console.log("MongoDB connected"))
+  .catch(err => console.error("MongoDB connection error:", err));
+
 
 // api endpoints
 app.use("/api/food",foodRouter)
