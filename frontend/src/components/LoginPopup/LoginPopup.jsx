@@ -31,7 +31,7 @@ const LoginPopup = ({ setShowLogin }) => {
         localStorage.setItem("token", response.data.token);
         // Check if admin login, then redirect to admin URL
         if (response.data.redirect) {
-          window.location.href = "http://localhost:5174/";
+          window.location.href = "https://food-del1-a8rf.onrender.com";
         } else {
           setShowLogin(false);
         }
