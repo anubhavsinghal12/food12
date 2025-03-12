@@ -1,7 +1,17 @@
 import mongoose from "mongoose";
 
-export const connectDB = async () =>{
-    await mongoose.connect('mongodb://localhost:27017/food1').then(()=>{
-       console.log('DB connected') ;
-    })
-}
+export const connectDB = async () => {
+  try {
+    await mongoose.connect(
+      "mongodb://food1User:strongPassword123@127.0.0.1:27017/food1?authSource=food1",
+      {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+      }
+    );
+    console.log("✅ MongoDB Connected with Authentication");
+  } catch (error) {
+    console.error("❌ MongoDB Connection Error:", error);
+    process.exit(1);
+  }
+};
