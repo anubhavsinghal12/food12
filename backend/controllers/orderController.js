@@ -93,14 +93,24 @@ const listOrders = async (req,res) =>{
 }
 
 // api for updating order status
-const updateStatus = async (req, res) =>{
+const updateStatus = async (req, res) => {
     try {
-        await orderModel.findByIdAndUpdate(req.body.orderId,{status:req.body.status})
-        res.json({success:true, message:"Status Updated"})
+        const updatedOrder = await orderModel.findByIdAndUpdate(
+            req.body.orderId,
+            { status: req.body.status },
+            { new: true } // Returns updated order
+        );
+
+        if (!updatedOrder) {
+            return res.status(404).json({ success: false, message: "Order not found" });
+        }
+
+        res.status(200).json({ success: true, message: "Status Updated", order: updatedOrder });
     } catch (error) {
-        console.log(error)
-        res.json({success:false, message:"Error"})  
+        console.error("Error updating order status:", error);
+        res.status(500).json({ success: false, message: "Internal Server Error" });
     }
-}
+};
+
 
 export {placeOrder, verifyOrder, userOrders,listOrders, updateStatus}
