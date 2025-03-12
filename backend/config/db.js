@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 export const connectDB = async () => {
   try {
     await mongoose.connect(
-      "mongodb://food1User:strongPassword123@192.168.182.41:27017/food1?authSource=food1",
+      "mongodb+srv://Anubhav123:Anubhav@cluster0.c02bl.mongodb.net/",
       {
      
         useUnifiedTopology: true,
