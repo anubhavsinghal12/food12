@@ -15,10 +15,10 @@ const Verify = () => {
     const verifyPayment = async () =>{
         const response = await axios.post(url+"/api/order/verify",{success, orderId});
         if(response.data.success){
-            navigate('https://food-del-7hph.onrender.com/myorders');
+            navigate('/myorders');
         }
         else{
-            navigate('https://food-del-7hph.onrender.com/')
+            navigate('/')
         }
     }
 
