@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import './Verify.css';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import { StoreContext } from './../../components/context/StoreContext';
 import axios from 'axios';
 
@@ -8,12 +8,11 @@ const Verify = () => {
     const [searchParams] = useSearchParams();
     const success = searchParams.get("success");
     const orderId = searchParams.get("orderId");
-    const { url } = useContext(StoreContext);
-    const navigate = useNavigate();
+    const { url } = useContext(StoreContext); // Ensure this has the correct backend URL
 
     const verifyPayment = async () => {
         if (!success || !orderId) {
-            navigate('/'); // Redirect to homepage if params are missing
+            window.location.href = "https://food-del-7hph.onrender.com/"; // Redirect to homepage
             return;
         }
 
@@ -21,19 +20,19 @@ const Verify = () => {
             const response = await axios.post(`${url}/api/order/verify`, { success, orderId });
 
             if (response.data.success) {
-                navigate('/myorders');
+                window.location.href = "https://food-del-7hph.onrender.com/myorders"; // Redirect to orders page
             } else {
-                navigate('/');
+                window.location.href = "https://food-del-7hph.onrender.com/"; // Redirect to homepage if verification fails
             }
         } catch (error) {
             console.error("Payment verification failed:", error);
-            navigate('/');
+            window.location.href = "https://food-del-7hph.onrender.com/"; // Redirect on error
         }
     };
 
     useEffect(() => {
         verifyPayment();
-    }, [success, orderId]); // Added dependencies
+    }, [success, orderId]); // Run only when params change
 
     return (
         <div className="verify">
