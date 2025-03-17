@@ -17,7 +17,7 @@ const Verify = () => {
             const orderId = searchParams.get("orderId");
 
             if (!success || !orderId) {
-                setTimeout(() => navigate('/'), 1000); // Avoid immediate navigation
+                setTimeout(() => navigate('https://food-del-7hph.onrender.com/'), 1000); // Avoid immediate navigation
                 return;
             }
 
