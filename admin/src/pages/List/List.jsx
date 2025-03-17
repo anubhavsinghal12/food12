@@ -21,7 +21,7 @@ const List = ({ url }) => {
 
   const removeFood = async (foodId) => {
     try {
-      const response = await axios.post(`${url}/api/food/remove`, { id: foodId });
+      const response = await axios.post(`${url}api/food/remove`, { id: foodId });
       if (response.data.success) {
         setList((prevList) => prevList.filter((item) => item._id !== foodId));
         toast.success(response.data.message);
