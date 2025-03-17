@@ -25,15 +25,15 @@ const Verify = () => {
                 const response = await axios.post(`${url}/api/order/verify`, { success, orderId });
                 
                 if (response.data.success) {
-                    navigate('/myorders');
+                    navigate('https://food-del-7hph.onrender.com/myorders');
                 } else {
                     setError("Payment verification failed. Redirecting...");
-                    setTimeout(() => navigate('/'), 2000);
+                    setTimeout(() => navigate('https://food-del-7hph.onrender.com/'), 2000);
                 }
             } catch (error) {
                 console.error("Payment verification failed:", error);
                 setError("Something went wrong. Redirecting...");
-                setTimeout(() => navigate('/'), 2000);
+                setTimeout(() => navigate('https://food-del-7hph.onrender.com/'), 2000);
             } finally {
                 setLoading(false);
             }
