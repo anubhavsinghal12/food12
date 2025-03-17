@@ -17,7 +17,7 @@ const Verify = () => {
             const orderId = searchParams.get("orderId");
 
             if (!success || !orderId) {
-                setTimeout(() => navigate('https://food-del-7hph.onrender.com/'), 1000); // Avoid immediate navigation
+                setTimeout(() => navigate('/'), 1000); // Avoid immediate navigation
                 return;
             }
 
@@ -25,15 +25,15 @@ const Verify = () => {
                 const response = await axios.post(`${url}/api/order/verify`, { success, orderId });
                 
                 if (response.data.success) {
-                    navigate('https://food-del-7hph.onrender.com/myorders');
+                    navigate('/myorders');
                 } else {
                     setError("Payment verification failed. Redirecting...");
-                    setTimeout(() => navigate('https://food-del-7hph.onrender.com/'), 2000);
+                    setTimeout(() => navigate('/'), 2000);
                 }
             } catch (error) {
                 console.error("Payment verification failed:", error);
                 setError("Something went wrong. Redirecting...");
-                setTimeout(() => navigate('https://food-del-7hph.onrender.com/'), 2000);
+                setTimeout(() => navigate('/'), 2000);
             } finally {
                 setLoading(false);
             }
