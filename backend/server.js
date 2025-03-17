@@ -6,10 +6,24 @@ import userRouter from './routes/userRoute.js';
 import 'dotenv/config';
 import cartRouter from './routes/cartRoute.js';
 import orderRouter from './routes/orderRoute.js';
-
+import path from "path";
+import { fileURLToPath } from "url";
 //app config
 const app = express()
 const port =process.env.PORT || 4000
+
+// Fix path issues in ES modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Serve React build files (important for Render deployment)
+app.use(express.static(path.join(__dirname, "client", "build")));
+
+app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
+});
+
+
 
 // middleware
 app.use(express.json())
