@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import './Verify.css';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { StoreContext } from './../../components/context/StoreContext';
@@ -6,45 +6,51 @@ import axios from 'axios';
 
 const Verify = () => {
     const [searchParams] = useSearchParams();
-    const success = searchParams.get("success");
-    const orderId = searchParams.get("orderId");
-    const { url } = useContext(StoreContext);
     const navigate = useNavigate();
+    const { url } = useContext(StoreContext);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
         const verifyPayment = async () => {
+            const success = searchParams.get("success");
+            const orderId = searchParams.get("orderId");
+
             if (!success || !orderId) {
-                console.warn("Missing success or orderId parameter, redirecting...");
-                navigate('/'); // Redirect to homepage
+                setTimeout(() => navigate('/'), 1000); // Avoid immediate navigation
                 return;
             }
 
             try {
-                const response = await axios.post(
-                    `${url}/api/order/verify`,
-                    { success, orderId },
-                    { headers: { "Content-Type": "application/json" } } // Ensure JSON headers
-                );
-
+                const response = await axios.post(`${url}/api/order/verify`, { success, orderId });
+                
                 if (response.data.success) {
-                    console.log("Payment verified successfully, redirecting to orders...");
-                    navigate('/myorders'); // Redirect to my orders
+                    navigate('/myorders');
                 } else {
-                    console.warn("Payment verification failed, redirecting...");
-                    navigate('/'); // Redirect to homepage
+                    setError("Payment verification failed. Redirecting...");
+                    setTimeout(() => navigate('/'), 2000);
                 }
             } catch (error) {
-                console.error("Payment verification failed:", error.message);
-                navigate('/');
+                console.error("Payment verification failed:", error);
+                setError("Something went wrong. Redirecting...");
+                setTimeout(() => navigate('/'), 2000);
+            } finally {
+                setLoading(false);
             }
         };
 
         verifyPayment();
-    }, [success, orderId, navigate, url]); // Ensure dependencies are correct
+    }, []); // Run only once on mount
 
     return (
         <div className="verify">
-            <div className="spinner"></div>
+            {loading ? (
+                <div className="spinner"></div>
+            ) : error ? (
+                <p className="error-message">{error}</p>
+            ) : (
+                <p>Redirecting...</p>
+            )}
         </div>
     );
 };
