@@ -1,36 +1,45 @@
-import React, { useContext, useEffect } from 'react'
-import './Verify.css'
-import { useNavigate, useSearchParams } from 'react-router-dom'
+import React, { useContext, useEffect } from 'react';
+import './Verify.css';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { StoreContext } from './../../components/context/StoreContext';
 import axios from 'axios';
 
 const Verify = () => {
-
-    const [searchParams, setSearchParams] = useSearchParams();
-    const success = searchParams.get("success")
-    const orderId = searchParams.get("orderId")
-    const {url} = useContext(StoreContext);
+    const [searchParams] = useSearchParams();
+    const success = searchParams.get("success");
+    const orderId = searchParams.get("orderId");
+    const { url } = useContext(StoreContext);
     const navigate = useNavigate();
 
-    const verifyPayment = async () =>{
-        const response = await axios.post(url+"/api/order/verify",{success, orderId});
-        if(response.data.success){
-            navigate('https://food-del-7hph.onrender.com/myorders');
+    const verifyPayment = async () => {
+        if (!success || !orderId) {
+            navigate('/'); // Redirect to homepage if params are missing
+            return;
         }
-        else{
-            navigate('https://food-del-7hph.onrender.com/')
-        }
-    }
 
-    useEffect(()=>{
+        try {
+            const response = await axios.post(`${url}/api/order/verify`, { success, orderId });
+
+            if (response.data.success) {
+                navigate('/myorders');
+            } else {
+                navigate('/');
+            }
+        } catch (error) {
+            console.error("Payment verification failed:", error);
+            navigate('/');
+        }
+    };
+
+    useEffect(() => {
         verifyPayment();
-    },[])
-   
-  return (
-    <div className='verify'>
-        <div className="spinner"></div>
-    </div>
-  )
-}
+    }, [success, orderId]); // Added dependencies
 
-export default Verify
+    return (
+        <div className="verify">
+            <div className="spinner"></div>
+        </div>
+    );
+};
+
+export default Verify;
