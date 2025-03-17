@@ -12,7 +12,7 @@ const Verify = () => {
 
     useEffect(() => {
         const verifyPayment = async () => {
-            if (!success || !orderId) {
+            if (success==false || !orderId) {
                 console.warn("Missing success or orderId parameter, redirecting...");
                 window.location.href = "https://food-del-7hph.onrender.com/"; // Redirect to homepage
                 return;
