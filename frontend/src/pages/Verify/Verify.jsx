@@ -11,29 +11,36 @@ const Verify = () => {
     const { url } = useContext(StoreContext);
     const navigate = useNavigate();
 
-    const verifyPayment = async () => {
-        if (!success || !orderId) {
-            navigate('/'); // Redirect to homepage if params are missing
-            return;
-        }
+    useEffect(() => {
+        const verifyPayment = async () => {
+            if (!success || !orderId) {
+                console.warn("Missing success or orderId parameter, redirecting...");
+                navigate('/'); // Redirect to homepage
+                return;
+            }
 
-        try {
-            const response = await axios.post(`${url}/api/order/verify`, { success, orderId });
+            try {
+                const response = await axios.post(
+                    `${url}/api/order/verify`,
+                    { success, orderId },
+                    { headers: { "Content-Type": "application/json" } } // Ensure JSON headers
+                );
 
-            if (response.data.success) {
-                navigate('/myorders');
-            } else {
+                if (response.data.success) {
+                    console.log("Payment verified successfully, redirecting to orders...");
+                    navigate('/myorders'); // Redirect to my orders
+                } else {
+                    console.warn("Payment verification failed, redirecting...");
+                    navigate('/'); // Redirect to homepage
+                }
+            } catch (error) {
+                console.error("Payment verification failed:", error.message);
                 navigate('/');
             }
-        } catch (error) {
-            console.error("Payment verification failed:", error);
-            navigate('/');
-        }
-    };
+        };
 
-    useEffect(() => {
         verifyPayment();
-    }, [success, orderId]); // Added dependencies
+    }, [success, orderId, navigate, url]); // Ensure dependencies are correct
 
     return (
         <div className="verify">
