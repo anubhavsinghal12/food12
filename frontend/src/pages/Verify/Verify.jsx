@@ -25,7 +25,7 @@ const Verify = () => {
             }
 
             try {
-                const { data } = await axios.post(`${url}/api/order/verify`, { success, orderId });
+                const { data } = await axios.post(`${url}api/order/verify`, { success, orderId });
 
                 if (isMounted) {
                     if (data.success) {
