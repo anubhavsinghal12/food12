@@ -2,6 +2,7 @@ import userModel from "../models/userModel.js";
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import validator from 'validator';
+import e from "express";
 
 // Define the admin credentials (email is used for authorization)
 const ADMIN_EMAIL = 'singhalatul849@gmail.com';
@@ -30,7 +31,12 @@ const loginUser = async (req, res) => {
     const token = createToken(user._id, isAdmin);
 
     // Set token in HTTP-only cookie for security
-    res.cookie('token', token, { httpOnly: true });
+    res.cookie('token', token, {
+      httpOnly: true,
+      expires: new Date(Date.now() + 1000 * 60 * 60), // 1 hour
+      sameSite: 'strict',
+      
+    });
 
     // If admin, include redirect URL in the response
     if (isAdmin) {
@@ -76,7 +82,12 @@ const registerUser = async (req, res) => {
 
     // Create token (admin flag will be set during login, if applicable)
     const token = createToken(user._id);
-    res.cookie('token', token, { httpOnly: true });
+    res.cookie('token', token, {
+      httpOnly: true,
+      expires: new Date(Date.now() + 1000 * 60 * 60), // 1 hour
+      sameSite: 'strict',
+      
+    });
     res.json({ success: true, token });
   } catch (error) {
     console.log(error);
