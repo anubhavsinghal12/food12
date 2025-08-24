@@ -1,13 +1,24 @@
-.navbar{
+/* 🌐 Navbar Base */
+.navbar {
     padding: 20px 0px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    background-color: #fff; /* light mode */
+    color: #49557e;
+    transition: 0.3s ease;
 }
 
+/* ✅ Responsive Logo */
+.navbar .logo {
+    max-width: 180px;   /* upper limit */
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+}
 
-
-.navbar-menu{
+/* 🌐 Navbar Menu */
+.navbar-menu {
     display: flex;
     list-style: none;
     gap: 20px;
@@ -15,13 +26,13 @@
     font-size: 18px;
 }
 
-.navbar-right{
+.navbar-right {
     display: flex;
     align-items: center;
     gap: 40px;
 }
 
-.navbar button{
+.navbar button {
     background: transparent;
     font-size: 16px;
     color: #49557e;
@@ -33,23 +44,24 @@
 }
 
 .navbar button:hover {
-background-color: #fff4f2;
+    background-color: #fff4f2;
 }
 
-.navbar .active{
+.navbar .active {
     padding-bottom: 2px;
     border-bottom: 2px solid #49557e;
 }
 
-.navbar li{
+.navbar li {
     cursor: pointer;
 }
 
-.navbar-search-icon{
+/* 🔍 Search Icon */
+.navbar-search-icon {
     position: relative;
 }
 
-.navbar-search-icon .dot{
+.navbar-search-icon .dot {
     position: absolute;
     min-width: 10px;
     min-height: 10px;
@@ -59,18 +71,19 @@ background-color: #fff4f2;
     right: -8px;
 }
 
-.navbar-profile{
+/* 👤 Profile Dropdown */
+.navbar-profile {
   position: relative;  
 }
 
-.nav-profile-dropdown{
+.nav-profile-dropdown {
     position: absolute;
     display: none;
     right: 0;
     z-index: 1;
 }
 
-.navbar-profile:hover .nav-profile-dropdown{
+.navbar-profile:hover .nav-profile-dropdown {
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -82,69 +95,128 @@ background-color: #fff4f2;
     list-style: none;
 }
 
-.nav-profile-dropdown img{
+.nav-profile-dropdown img {
     width: 20px;
 }
 
-.nav-profile-dropdown li:hover{
+.nav-profile-dropdown li:hover {
     color: tomato;
 }
 
-.nav-profile-dropdown li{
+.nav-profile-dropdown li {
     display: flex;
     align-items: center;
     gap: 10px;
     cursor: pointer;
 }
-@media (max-width:1050px){
-    .navbar .logo{
-        width: 140px;
+
+/* 🌙 Dark Mode Support */
+body.dark-mode .navbar {
+    background-color: #1e1e1e;
+    color: #f1f1f1;
+}
+
+body.dark-mode .navbar-menu {
+    color: #f1f1f1;
+}
+
+body.dark-mode .navbar button {
+    color: #f1f1f1;
+    border: 1px solid tomato;
+}
+
+body.dark-mode .navbar button:hover {
+    background-color: #2a2a2a;
+}
+
+body.dark-mode .navbar .active {
+    border-bottom: 2px solid #f1f1f1;
+}
+
+body.dark-mode .nav-profile-dropdown {
+    background-color: #2a2a2a;
+    border: 1px solid tomato;
+    color: #fff;
+}
+
+/* 📱 Responsive Tweaks */
+@media (max-width:1050px) {
+    .navbar .logo {
+        max-width: 140px;
     }
 
-    .navbar-menu{
+    .navbar-menu {
         gap: 20px;
         font-size: 17px;
     }
 
-    .navbar-right{
+    .navbar-right {
         gap: 30px;
     }
 
-    .navbar-right img{
+    .navbar-right img {
         width: 22px;
     }
 
-    .navbar-right button{
+    .navbar-right button {
         padding: 8px 25px;
     }
 }
 
-@media (max-width:900px){
-    .navbar .logo{
-        width: 120px;
+@media (max-width:900px) {
+    .navbar .logo {
+        max-width: 120px;
     }
 
-    .navbar-menu{
+    .navbar-menu {
         gap: 15px;
         font-size: 16px;
     }
 
-    .navbar-right{
+    .navbar-right {
         gap: 20px;
     }
 
-    .navbar-right img{
+    .navbar-right img {
         width: 20px;
     }
 
-    .navbar-right button{
+    .navbar-right button {
         padding: 7px 20px;
         font-size: 15px;
     }
 }
 
-@media (max-width:750px){
-    .navbar-menu{
-        display: none;
-    } 
+@media (max-width:750px) {
+    .navbar-menu {
+        display: none; /* Hide menu on small screens */
+    }
+
+    .navbar {
+        justify-content: space-between; /* ✅ Keep logo left, right section right */
+        padding: 15px 20px;
+    }
+
+    .navbar .logo {
+        max-width: 110px;
+    }
+
+    .navbar-right {
+        gap: 15px;
+    }
+}
+
+@media (max-width:600px) {
+    .navbar .logo {
+        max-width: 90px;
+    }
+
+    .navbar-right {
+        gap: 10px;
+    }
+
+    .navbar-right button {
+        padding: 6px 15px;
+        font-size: 14px;
+    }
 }
